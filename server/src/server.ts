@@ -145,11 +145,11 @@ interface CLIOptions {
 }
 
 interface CLIEngine {
-	executeOnText(content: string, file?:string): ESLintReport;
+	executeOnText(content: string, file?: string): ESLintReport;
 }
 
 interface CLIEngineConstructor {
-	new (options: CLIOptions): CLIEngine;
+	new(options: CLIOptions): CLIEngine;
 }
 
 
@@ -922,7 +922,7 @@ class Fixes {
 
 	public getScoped(diagnostics: Diagnostic[]): AutoFix[] {
 		let result: AutoFix[] = [];
-		for(let diagnostic of diagnostics) {
+		for (let diagnostic of diagnostics) {
 			let key = computeKey(diagnostic);
 			let editInfo = this.edits.get(key);
 			if (editInfo) {
@@ -1004,7 +1004,7 @@ messageQueue.registerRequest(CodeActionRequest.type, (params) => {
 		documentVersion = editInfo.documentVersion;
 		ruleId = editInfo.ruleId;
 		let workspaceChange = new WorkspaceChange();
-		workspaceChange.getTextEditChange({uri, version: documentVersion}).add(createTextEdit(editInfo));
+		workspaceChange.getTextEditChange({ uri, version: documentVersion }).add(createTextEdit(editInfo));
 		commands.set(CommandIds.applySingleFix, workspaceChange);
 		result.push(Command.create(editInfo.label, CommandIds.applySingleFix));
 	};
@@ -1027,14 +1027,14 @@ messageQueue.registerRequest(CodeActionRequest.type, (params) => {
 		}
 		if (same.length > 1) {
 			let sameFixes: WorkspaceChange = new WorkspaceChange();
-			let sameTextChange = sameFixes.getTextEditChange({uri, version: documentVersion});
+			let sameTextChange = sameFixes.getTextEditChange({ uri, version: documentVersion });
 			same.map(createTextEdit).forEach(edit => sameTextChange.add(edit));
 			commands.set(CommandIds.applySameFixes, sameFixes);
 			result.push(Command.create(`Fix all ${ruleId} problems`, CommandIds.applySameFixes));
 		}
 		if (all.length > 1) {
 			let allFixes: WorkspaceChange = new WorkspaceChange();
-			let allTextChange = allFixes.getTextEditChange({uri, version: documentVersion});
+			let allTextChange = allFixes.getTextEditChange({ uri, version: documentVersion });
 			all.map(createTextEdit).forEach(edit => allTextChange.add(edit));
 			commands.set(CommandIds.applyAllFixes, allFixes);
 			result.push(Command.create(`Fix all auto-fixable problems`, CommandIds.applyAllFixes));

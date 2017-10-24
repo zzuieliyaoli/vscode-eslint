@@ -167,7 +167,7 @@ function enable() {
 		Window.showWarningMessage('ESLint can only be enabled if VS Code is opened on a workspace folder.');
 		return;
 	}
-	let disabledFolders = folders.filter(folder => !Workspace.getConfiguration('eslint',folder.uri).get('enable', true));
+	let disabledFolders = folders.filter(folder => !Workspace.getConfiguration('eslint', folder.uri).get('enable', true));
 	if (disabledFolders.length === 0) {
 		if (folders.length === 1) {
 			Window.showInformationMessage('ESLint is already enabled in the workspace.');
@@ -190,7 +190,7 @@ function disable() {
 		Window.showErrorMessage('ESLint can only be disabled if VS Code is opened on a workspace folder.');
 		return;
 	}
-	let enabledFolders = folders.filter(folder => Workspace.getConfiguration('eslint',folder.uri).get('enable', true));
+	let enabledFolders = folders.filter(folder => Workspace.getConfiguration('eslint', folder.uri).get('enable', true));
 	if (enabledFolders.length === 0) {
 		if (folders.length === 1) {
 			Window.showInformationMessage('ESLint is already disabled in the workspace.');
@@ -365,8 +365,8 @@ export function realActivate(context: ExtensionContext) {
 	let defaultErrorHandler: ErrorHandler;
 	let serverCalledProcessExit: boolean = false;
 
-	let packageJsonFilter: DocumentFilter = { scheme: 'file', pattern: '**/package.json'};
-	let configFileFilter: DocumentFilter = { scheme: 'file', pattern: '**/.eslintr{c.js,c.yaml,c.yml,c,c.json}'};
+	let packageJsonFilter: DocumentFilter = { scheme: 'file', pattern: '**/package.json' };
+	let configFileFilter: DocumentFilter = { scheme: 'file', pattern: '**/.eslintr{c.js,c.yaml,c.yml,c,c.json}' };
 	let syncedDocuments: Map<string, TextDocument> = new Map<string, TextDocument>();
 
 	Workspace.onDidChangeConfiguration(() => {
@@ -384,7 +384,7 @@ export function realActivate(context: ExtensionContext) {
 		}
 	});
 	let clientOptions: LanguageClientOptions = {
-		documentSelector: [{ scheme: 'file' }, { scheme: 'untitled'}],
+		documentSelector: [{ scheme: 'file' }, { scheme: 'untitled' }],
 		diagnosticCollectionName: 'eslint',
 		revealOutputChannelOn: RevealOutputChannelOn.Never,
 		synchronize: {
